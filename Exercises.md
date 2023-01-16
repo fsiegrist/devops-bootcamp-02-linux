@@ -4,18 +4,47 @@
 
 <details>
 <summary>Exercise 1: Linux Mint Virtual Machine </summary>
- <br />
+<br />
 
-Download Page
+Create a Linux Mint Virtual Machine on your computer. Check the distribution, which package manager it uses (yum, apt, apt-get). Which CLI editor is configured (Nano, Vi, Vim). What software center/software manager it uses. Which shell is configured for your user.
+
+-----
+
+Download and install UTM (VirtualBox does not yet run on Apple M2) from
+- https://mac.getutm.app/
+
+Download linuxmint-21.1-cinnamon-64bit.iso from
 - https://linuxmint.com/download.php
 
-Installation Guide
+Installation Guide:
 - https://linuxmint-installation-guide.readthedocs.io/en/latest/
 
-If you have any issues creating the VM locally, you can use this free online VM platform to get access to Linux Mint
-- https://www.onworks.net/component/content/article?id=65735:free-linux-mint-online
+Start UTM and create new VM based on downloaded .iso file.
+=> Cannot start the OS
 
-_Just click on "run online" and it will spin up a new Mint OS machine for you_
+Try installing Ubuntu.
+
+Download Ubuntu 22.04.1 LTS Server for ARM from 
+- https://cdimage.ubuntu.com/releases/22.04/release/ubuntu-22.04.1-live-server-arm64.iso
+
+Installation Guide (from https://docs.getutm.app/guides/ubuntu/):
+- Open UTM and click the “+” button to open the VM creation wizard.
+- Select “Virtualize”.
+- Select “Linux”.
+- Click “Browse” and select the Ubuntu Server ISO downloaded from the link above. Press “Next” to continue.
+- Pick the amount of RAM and CPU cores you wish to give access to the VM. Press “Next” to continue.
+- Specify the maximum amount of drive space to allocate. Press “Next” to continue.
+- If you have a directory you want to mount in the VM, you can select it here. Alternatively, you can skip this and select the directory later from the VM window’s toolbar. The shared directory will be available after installing SPICE tools (see below). Press “Next” to continue.
+- Press “Save” to create the VM and press the Run button to start the VM.
+- Go through the Ubuntu installer. If the reboot fails, you can manually quit the VM, unmount the installer ISO, and start the VM again to boot into your new installation.
+
+If you installed Ubuntu Server, then at the end of the installation, you will not have any GUI. To install Ubuntu Desktop, log in and run:
+```sh
+$ sudo apt update
+$ sudo apt install ubuntu-desktop
+$ sudo reboot
+```
+
 
 </details>
 
@@ -23,7 +52,19 @@ _Just click on "run online" and it will spin up a new Mint OS machine for you_
 
 <details>
 <summary>Exercise 2: Bash Script - Install Java </summary>
- <br />
+<br />
+
+Write a bash script using Vim editor that installs the latest java version and checks whether java was installed successfully by executing a `java -version` command.
+
+After installation command, it checks 3 conditions:
+
+  1. whether java is installed at all
+  2. whether an older Java version is installed (java version lower than 11)
+  3. whether a java version of 11 or higher was installed 
+
+It prints relevant informative messages for all 3 conditions. Installation was successful if the 3rd condition is met and you have Java version 11 or higher available.
+
+-----
 
 **script:**
 ```sh
