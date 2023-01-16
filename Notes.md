@@ -64,17 +64,23 @@ Execute commands as superuser
 <summary>Video: Package Manager - Installing Software on Linux</summary>
 <br />
 
+Debian based Linux distributions (like Debian, Ubuntu, Mint) use the package manager apt (or apt-get),
+whereas Red Hat based distributions (like RHEL, CentOS, Fedora) use yum.
+
 APT Package Manager:
 - `sudo apt search [package_name]` = Search for a given package
 - `sudo apt install [package_name]` = Install a given package
 - `sudo apt install [package_name] [package_name2]` = Install multiple packages with one command
 - `sudo apt remove [package_name]` = Remove installed package
-- `sudo apt update` = Updates the package index. Pulls the latest change sfrom the APT repositories
+- `sudo apt update` = Updates the package index. Pulls the latest changes from the APT repositories
+- `sudo apt upgrade [package_name]` = Upgrade the system by intalling/upgrading packages
+- `apt list --upgradeable` = List packages that can be upgraded by newer versions
+- `apt list --installed` = List installed packages
 
 APT-GET Package Manager:
 - `sudo apt-get install [package_name]` = Install package with apt-get package manager
 
-SNAP Package Manager:
+SNAP Package Manager (https://snapcraft.io/):
 - `sudo snap install [package_name]` = Install a given package
 
 
@@ -100,7 +106,7 @@ Vim Commands:
 - `Type :wq` = Write File to disk and quit Vim
 - `Type :q!` = Quit Vim without saving the changes
 - `Type dd` = Delete entire line
-- `Type d10` = Delete next 10 lines
+- `Type d10d` = Delete next 10 lines
 - `Type u` = Undo
 - `Type A` = Jump to end of line and switch to insert mode
 - `Type 0` = Jump to start of the line
@@ -110,7 +116,7 @@ Vim Commands:
 - `Type /pattern` = Search for pattern, e.g. `/nginx`
     - `Type n` = Jump to next match
     - `Type N` = Search in opposite direction
-- `Type :%s/old/new` = Replace 'old' with 'new' throughout the file
+- `Type :%s/old/new/g` = Replace 'old' with 'new' throughout the file
 
 </details>
 
