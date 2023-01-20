@@ -138,11 +138,11 @@ Vim Commands:
 - `su -` = Login as root
 <!-- -->
 - `sudo groupadd [groupname]` = Create new group (System assigns next available GID)
-- `sudo adduser [username]` = Switch to Insert Mode
 
-**Note 2 different User/Group commands:**<br />
-`adduser`, `addgroup`, `deluser`,  `delgroup` = interactive, more user friendly commands<br />
-`useradd`, `groupadd`,  `userdel`,  `groupdel` = low-level utilities, more infos need provided by yourself
+**Note 2 different User/Group commands:**
+<br />
+`adduser`, `addgroup`, `deluser`, `delgroup` = interactive, more user friendly commands<br />
+`useradd`, `groupadd`, `userdel`, `groupdel` = low-level utilities, all infos need to be provided as parameters; use these commands in scripts
 
 - `sudo usermod [OPTIONS] [username]` = Modify a user account
 - `sudo usermod -g devops tom` = Assign 'devops' as the primary group for 'tom' user
@@ -165,7 +165,7 @@ Vim Commands:
 **Ownership:**
 - `sudo chown [username]:[groupname] [filename]` = Change ownership
 - `sudo chown tom:admin test.txt` = Change ownership of 'test.txt' file to 'tom' and group 'admin'
-- `sudo chown admin test.txt` = Change ownership of 'test.txt' 'admin' user
+- `sudo chown admin test.txt` = Change ownership of 'test.txt' to 'admin' user
 - `sudo chgrp devops test.txt` = Make 'devops' group owner of test.txt file
 
 **Possible File Permissions (Symbolic):**
@@ -182,7 +182,7 @@ File Permissions can be changed for:
 - o = Other (all other users)
 
 Minus (-) removes the permission
-- `sudo chmod -x api` = Takes 'execute' permission away for 'api' folder from all owners
+- `sudo chmod -x api` = Takes 'execute' permission away for 'api' folder from all owners (user, group, others)
 - `sudo chmod g-w config.yaml` = Takes 'write' permission away for 'config.yaml' file from the group 
 
 Plus (+) adds permission
@@ -209,6 +209,55 @@ _Set permissions for all owners with 3 digits, 1 digit for each owner_ [Absolute
 <!-- -->
 - `sudo chmod 777 script.sh` = rwx (Read, Write and Execute) permission for everyone for file 'script.sh'
 - `sudo chmod 740 script.sh` = Give user all permissions (7), give group only read permission (4), give other no permission (0)
+
+</details>
+
+******
+
+<details>
+<summary>Video: Basic Linux Commands - Pipes & Redirects (CLI - Part 3)</summary>
+<br />
+
+**Pipe & Less:**
+
+Pipe Command:
+- `|` = Pipe command = Pipes the output of the previous command as an input to the next command
+
+Less Command:
+- `less [filename]` = Displays the contents of a file or a command output, one page at a time. And allows to navigate forward (by typing space) and backward (by typing b) through the file
+
+Different piping examples/use cases:
+- `cat /var/log/syslog | less` = Pipes the output of 'syslog' file to less program.
+- `ls /usr/bin | less` = Pipes the output of ls command to less program.
+- `history | less` = Pipes the output of history command to less program.
+
+**Pipe & Grep:**
+
+Grep Command:
+- `grep [pattern]` = Searches for a particular pattern of characters and displays all lines that contain that pattern
+
+More piping examples/use cases:
+- `history | grep sudo` = Look for any commands of history commands, which have 'sudo' word in it
+- `history | grep "sudo chmod"` = Look for any commands of history commands, which have 'sudo chmod' phrase in it
+- `history | grep sudo | less` = History output will pass output to grep and filter for 'sudo' and this output will again be piped or passed to less program
+- `ls /usr/bin/ | grep java` = Filter ls output for java
+- `cat Documents/java-app/config.yaml | grep ports` = See all 'ports' occurences in config.yaml file
+
+**Redirects in Linux:**
+- `>` = Redirect Operator = Takes the output from the previous command and sends it to a file that you give
+
+Different redirects examples/use cases:
+- `history | grep sudo > sudo-commands.txt` = Redirect output into a 'sudo-commands.txt' file
+- `cat sudo-commands.txt > sudo-rm-commands.txt` = Redirect output of 'sudo-commands.txt' file into 'sudo-rm-commands.txt' file
+- `history | grep rm > sudo-rm-commands.txt` = Redirect output of filtered history commands into existing 'sudo-rm-commands.txt' file. Note: Contents of file will be _overwritten_
+- `history | grep rm >> sudo-rm-commands.txt` = Redirect output of filtered history commands into existing 'sudo-rm-commands.txt' file. Note: Contents of file will be _appended_
+
+Standard Input / Output:
+
+Every program has 3 built-in streams:
+- STDIN (0)
+- STDOUT (1)
+- STDERR (2)
 
 
 </details>
@@ -301,6 +350,8 @@ fi
 
 echo "using file $file_name to configure something"
 echo "here are all configuration files: $config_files"
+
+# use double brackets [[ ]] for conditions in bash scripts
 ```
 
 **User input:**
@@ -331,7 +382,7 @@ echo "group $2"
 
 `./example.sh "name lastname" # 1 param`
 
-`bash example name lastname`
+`bash example.sh name lastname`
 
 **Loops:**
 ```sh
@@ -426,10 +477,10 @@ function create_file() {
 	fi
 }
 
-# Invoke with diff params
+# Invoke with different params
 create_file test.txt
 create_file myfile.yaml
-create_file myscript.sh
+create_file myscript.sh true
 
 # Function with return value
 function sum() {
@@ -442,48 +493,6 @@ result=$?
 
 echo "sum of 2 and 10 is $result"
 ```
-
-</details>
-
-******
-
-<details>
-<summary>Video: Basic Linux Commands - Pipes & Redirects (CLI - Part 3)</summary>
-<br />
-
-**Pipe & Less:**
-
-Pipe Command:
-- `|` = Pipe command = Pipes the output of the previous command as an input to the next command
-
-Less Command:
-- `less [filename]` = Displays the contents of a file or a command output, one page at a time. And allows to navigate forward and backward through the file
-
-Different piping examples/use cases:
-- `cat /var/log/syslog | less` = Pipes the output of 'syslog' file to less program.
-- `ls /usr/bin | less` = Pipes the output of ls command to less program.
-- `history | less` = Pipes the output of history command to less program.
-
-**Pipe & Grep:**
-
-Grep Command:
-- `grep [pattern]` = Searches for a particular pattern of characters and displays all lines that contain that pattern
-
-More piping examples/use cases:
-- `history | grep sudo` = Look for any commands of history commands, which have 'sudo' word in it
-- `history | grep "sudo chmod"` = Look for any commands of history commands, which have 'sudo chmod' phrase in it
-- `history | grep sudo | less` = History output will pass output to grep and filter for 'sudo' and this output will again be piped or passed to less program
-- `ls /usr/bin/ | grep java` = Filter ls output for java
-- `cat Documents/java-app/config.yaml | grep ports` = See all 'ports' occurences in config.yaml file
-
-**Redirects in Linux:**
-- `>` = Redirect Operator = Takes the output from the previous command and sends it to a file that you give
-
-Different redirects examples/use cases:
-- `history | grep sudo > sudo-commands.txt` = Redirect output into a 'sudo-commands.txt' file
-- `cat sudo-commands.txt > sudo-rm-commands.txt` = Redirect output of 'sudo-commands.txt' file into 'sudo-rm-commands.txt' file
-- `history | grep rm > sudo-rm-commands.txt` = Redirect output of filtered history commands into existing 'sudo-rm-commands.txt' file. Note: Contents of file will be _overwritten_
-- `history | grep rm >> sudo-rm-commands.txt` = Redirect output of filtered history commands into existing 'sudo-rm-commands.txt' file. Note: Contents of file will be _appended_
 
 </details>
 
