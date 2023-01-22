@@ -78,7 +78,7 @@ APT Package Manager:
 - `apt list --installed` = List installed packages
 
 APT-GET Package Manager:
-- `sudo apt-get install [package_name]` = Install package with apt-get package manager
+- `sudo apt-get -y install [package_name]` = Install package with apt-get package manager  (-y or --yes or --assume-yes: automatic yes to any prompts during installation)
 
 SNAP Package Manager (https://snapcraft.io/):
 - `sudo snap install [package_name]` = Install a given package
@@ -235,6 +235,7 @@ Different piping examples/use cases:
 
 Grep Command:
 - `grep [pattern]` = Searches for a particular pattern of characters and displays all lines that contain that pattern
+  - `-v` = Invert match; selected lines are those not matching any of the specified patterns.
 
 More piping examples/use cases:
 - `history | grep sudo` = Look for any commands of history commands, which have 'sudo' word in it
@@ -259,6 +260,8 @@ Every program has 3 built-in streams:
 - STDOUT (1)
 - STDERR (2)
 
+`2>/dev/null` = Redirect stderr to /dev/null, i.e. suppress the error output
+`2>&1` = Redirect stderr to stdout
 
 </details>
 
@@ -544,9 +547,8 @@ Persisting Environment Variables system wide:
 - /etc/environment = system wide, meaning all users will have access to the variables
 
 **PATH Environment Variable:**
-- `PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` = List of directories to executible files, separated by ':'. Tells the shell which directories to ssearch for the executable in response to our executed command
+- `PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` = List of directories to executible files, separated by ':'. Tells the shell which directories to search for the executable in response to our executed command
 - `PATH=$PATH:/home/nana` = Appending /home/nana folder to the existing $PATH value
-
 
 </details>
 
@@ -560,6 +562,11 @@ Useful Networking Commands:
 - `ip`= one of the basic commands. For setting up new systems and assigning IPs to troubleshooting existing systems. Can show address information, manipulate routing, plus display network various devices, interfaces, and tunnels.
 - `ifconfig`= for configuring and troubleshooting networks. It has since been replaced by the `ip` command
 - `netstat`= tool for printing network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
+  - By  default, netstat displays a list of open sockets.
+  - `-t` = Show sockets of the tcp address family.
+  - `-l` = Show only listening sockets.  (These are omitted by default.)
+  - `-n` = Show numerical addresses instead of trying to determine symbolic host, port or user names.
+  - `-p` = Show the PID and name of the program to which each socket belongs.
 - `ps aux` =
   - ps = displays information about a selection of the active processes
   - a = show processes for all users
@@ -577,16 +584,17 @@ Useful Networking Commands:
 <br />
 
 Connecting via SSH: `ssh username@SSHserver`
-- `ssh root@159.89.14.94`= Connect with root user to 159.89.14.94 server address
-- `ssh-keygen -t rsa`= Create SSH Key Pair with 'rsa' algorithm. SSH Key Pair is stored to the default location `~/.ssh`
-- `ls .ssh/`= Display contents of .ssh folder, which has:
+- `ssh root@159.89.14.94` = Connect with root user to 159.89.14.94 server address
+- `ssh-keygen -t rsa` = Create SSH Key Pair with 'rsa' algorithm. SSH Key Pair is stored to the default location `~/.ssh`
+- `ls .ssh/` = Display contents of .ssh folder, which has:
   - `id_rsa` = Private Key
-  - `id_rsa.pub` = Public Key
+  - `id_rsa.pub` = Public Key (content must be copied into server's `~/.ssh/authorized_keys` file)
 - `ssh -i .ssh/id_rsa root@159.89.14.94` = Connect with root user to 159.89.14.94 server address with specified private key file location (.ssh/id_rsa = default, but you can specify a different one like this)
 
 Two Files used by SSH:
-- `~/.ssh/known_hosts` = lets the client authenticate the server to check that it isn't connecting to an impersonator
-- `~/.ssh/authorized_keys` = lets the server authenticate the user
+- `~/.ssh/known_hosts` = lets the client authenticate the server to check that it isn't connecting to an impersonatorn (contains the public keys of trusted servers)
+- `~/.ssh/authorized_keys` = lets the server authenticate the user (contains the public keys of authorized clients)
+
 
 </details>
 
