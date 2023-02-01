@@ -146,6 +146,7 @@ Vim Commands:
 
 - `sudo usermod [OPTIONS] [username]` = Modify a user account
 - `sudo usermod -g devops tom` = Assign 'devops' as the primary group for 'tom' user
+- `sudo usermod -aG sudo tom` = Add the user 'tom' to the 'sudo' group
 - `sudo delgroup tom` = Removes group 'tom'
 - `groups` = Display groups the current logged in user belongs to
 - `groups [username]` = Display groups of the given username
@@ -589,6 +590,7 @@ Connecting via SSH: `ssh username@SSHserver`
 - `ls .ssh/` = Display contents of .ssh folder, which has:
   - `id_rsa` = Private Key
   - `id_rsa.pub` = Public Key (content must be copied into server's `~/.ssh/authorized_keys` file)
+  - to copy the public key on a mac, use `pbcopy < ~/.ssh/id_rsa.pub`
 - `ssh -i .ssh/id_rsa root@159.89.14.94` = Connect with root user to 159.89.14.94 server address with specified private key file location (.ssh/id_rsa = default, but you can specify a different one like this)
 
 Two Files used by SSH:
