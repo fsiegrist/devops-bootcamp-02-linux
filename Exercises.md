@@ -1,7 +1,6 @@
 ## Exercises
 <br />
 
-
 <details>
 <summary>Exercise 1: Linux Mint Virtual Machine </summary>
 <br />
